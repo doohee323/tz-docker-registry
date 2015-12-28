@@ -1,4 +1,4 @@
-# run external docker registry in vagrant
+# run external docker registry in vagrant (with nginx Basic Authentication)
 
 * required
 ```
@@ -16,15 +16,15 @@
 	
 * workflow
 ```
-	1. make cert before making vagrant vms
-	2. make docker registry vm (docker.sh)
+	1. make cert before making vagrant VMs
+	2. make docker registry VM (docker.sh)
 		update certs
 		install docker
 		make test docker image
 		install nginx
 		make docker-registry / nginx-registry
 		push test image to external server with https
-	3. make client registry vm (client.sh)
+	3. make client registry VM (client.sh)
 		update certs
 		install docker
 		pull test image from external server with https
