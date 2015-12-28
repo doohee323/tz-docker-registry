@@ -10,8 +10,9 @@
 ```
 
 * run		
+```
 	bash build.sh
-	
+```	
 	
 * workflow
 ```
