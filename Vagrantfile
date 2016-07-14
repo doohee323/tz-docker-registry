@@ -8,9 +8,11 @@ Vagrant.configure("2") do |config|
      v.customize ["modifyvm", :id, "--cpus", "2"]
    end
 
+  # $ vagrant box --force update
+  # $ vagrant box list 
   $config['ip'].each do | host_name, host_ip |
     config.vm.define "#{host_name}" do |node|
-      node.vm.box = "precise64"
+      node.vm.box = "ubuntu/trusty64"
       node.vm.hostname = "#{host_name}"
       node.vm.network :private_network, ip: host_ip
       node.vm.provision "shell", :path => File.join(File.dirname(__FILE__),"scripts/#{host_name}.sh"), :args => node.vm.hostname 

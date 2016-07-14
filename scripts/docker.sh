@@ -16,7 +16,7 @@ sudo update-ca-certificates
 ### [docker] ############################################################################################################
 sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 #sudo chown -Rf vagrant:vagrant /etc/apt/sources.list.d
-sudo echo 'deb https://apt.dockerproject.org/repo ubuntu-precise main' > /etc/apt/sources.list.d/docker.list
+sudo sh -c "echo 'deb https://apt.dockerproject.org/repo ubuntu-trusty main' > /etc/apt/sources.list.d/docker.list"
 sudo apt-get update
 sudo apt-get install docker-engine -y
 
@@ -34,14 +34,17 @@ sudo service docker restart
 sudo apt-get install nginx -y
 
 #sudo chown -Rf vagrant:vagrant /etc/hosts
-sudo echo '' >> /etc/hosts
-sudo echo '192.168.82.170	registry.tz.com' >> /etc/hosts
+sudo sh -c "echo '' >> /etc/hosts"
+sudo sh -c "echo '192.168.82.170 registry.tz.com' >> /etc/hosts"
 
 ### [make docker-registry / nginx-registry] ############################################################################################################
+
+#sudo docker rm docker-registry
 sudo docker run -d --restart=always --name docker-registry \
     -v /tmp/registry:/tmp/registry \
     registry:0.8.1
 
+#sudo docker rm nginx-registry
 sudo docker run -d --restart=always --name nginx-registry \
     -v /vagrant/resources/nginx/nginx.conf:/etc/nginx/nginx.conf \
     -v /vagrant/.htpasswd:/etc/nginx/.htpasswd \
@@ -51,9 +54,18 @@ sudo docker run -d --restart=always --name nginx-registry \
     -p 443:443 \
     nginx:1.7.5
 
+sudo docker ps -a
+
+#sudo docker stop nginx-registry
+#sudo docker start nginx-registry
+
+#sudo docker stop docker-registry
+#sudo docker start docker-registry
+
+
 ### [push test image to external server with https] ############################################################################################################
 #sudo docker login https://registry.tz.com
-sudo docker login --username=testuser --password=pswd1234 --email=tz@gmail.com https://registry.tz.com
+sudo docker login --username=testuser --password=pswd1234 https://registry.tz.com
 
 sudo docker tag test:0.1 registry.tz.com/test:0.1
 sudo docker push registry.tz.com/test:0.1

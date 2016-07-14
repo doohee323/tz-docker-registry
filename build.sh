@@ -4,14 +4,16 @@
 set -x
 
 ### [make certs] ############################################################################################################
+echo "not required: email / password"
+echo "required: common name: registry.tz.com"
 openssl genrsa -out server.key 2048
-# cf. USA / CA / SF / TZ / CTO / registry.tz.com 
-#     not required: email / password
-# *** common name: registry.tz.com
+# cf. US / CA / SF / TZ / CTO / registry.tz.com
+ 
 openssl req -new -key server.key -out server.csr
 openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
 
-htpasswd -nb testuser pswd1234 > .htpasswd
+echo "required password: pswd1234"
+htpasswd -c .htpasswd testuser
 
 ### [run vagrant] ############################################################################################################
 
