@@ -21,14 +21,7 @@ sudo apt-get update
 sudo apt-get install docker-engine -y
 
 sudo usermod -aG docker vagrant
-
-### [make test docker image] ###########################################################################################
 sudo chown -Rf vagrant:vagrant /home/vagrant
-sudo cp /vagrant/resources/docker/Dockerfile /home/vagrant
-cd /home/vagrant
-sudo docker build --tag test:0.1 .
-sudo docker images
-sudo service docker restart
 
 ### [nginx] ############################################################################################################
 sudo apt-get install nginx -y
@@ -46,7 +39,7 @@ sudo docker run -d --restart=always --name docker-registry \
 
 #sudo docker rm nginx-registry
 sudo docker run -d --restart=always --name nginx-registry \
-    -v /vagrant/resources/nginx/nginx.conf:/etc/nginx/nginx.conf \
+    -v /vagrant/resources/nginx/register.conf:/etc/nginx/nginx.conf \
     -v /vagrant/.htpasswd:/etc/nginx/.htpasswd \
     -v /vagrant/server.key:/etc/server.key \
     -v /vagrant/server.crt:/etc/server.crt \
@@ -62,6 +55,14 @@ sudo docker ps -a
 #sudo docker stop docker-registry
 #sudo docker start docker-registry
 
+### [make test docker image] ###########################################################################################
+sudo cp /vagrant/resources/docker/Dockerfile /home/vagrant
+cd /home/vagrant
+sudo docker build --tag test:0.1 .
+sudo docker images
+
+# sudo service docker restart
+# sudo docker rmi test:0.1
 
 ### [push test image to external server with https] ############################################################################################################
 #sudo docker login https://registry.tz.com
@@ -70,6 +71,7 @@ sudo docker login --username=testuser --password=pswd1234 https://registry.tz.co
 sudo docker tag test:0.1 registry.tz.com/test:0.1
 sudo docker push registry.tz.com/test:0.1
 
+exit 0
 
 
   

@@ -23,10 +23,27 @@ sudo apt-get install docker-engine -y
 
 sudo usermod -aG docker vagrant
 
-### [pull test image from external server with https] ############################################################################################################
-sudo docker login --username=testuser --password=pswd1234 --email=test@gmail.com https://registry.tz.com
+### [pull test image from external server with https] ##########################################################################
+sudo docker login --username=testuser --password=pswd1234 https://registry.tz.com
 sudo docker pull registry.tz.com/test:0.1
 sudo docker images
 
+# sudo docker build --tag hello:0.2 .
+# sudo docker run --name hello-nginx2 -d -p 80:80 -v /root/data:/data hello:0.2
+# sudo cp /vagrant/resources/docker/Dockerfile /home/vagrant
+
 sudo docker run -d --restart=always --name hello3 registry.tz.com/test:0.1 /bin/bash
+
 sudo docker ps -a
+sudo docker history registry.tz.com/test:0.1
+sudo docker inspect registry.tz.com/test:0.1
+
+# sudo docker stop hello3
+# sudo docker start hello3
+
+echo "Now you can access to registry server through https://registry.tz.com/ with testuser/pswd1234."
+echo " - need to add 192.168.82.171 registry.tz.com into /etc/hosts."
+echo "You can access to the nginx on docker container through http://192.168.82.171."
+
+exit 0
+
