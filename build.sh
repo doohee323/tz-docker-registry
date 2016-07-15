@@ -3,6 +3,7 @@
 set +x
 
 # cf. https://docs.docker.com/registry/deploying/
+#     https://github.com/docker/docker-registry
 
 export SECURE_YN="y";
 #echo "Do you want a secured server? (y/n)? "
@@ -10,6 +11,8 @@ export SECURE_YN="y";
 #echo "You entered: $SECURE_YN"
 
 set -x
+
+echo "You entered: $SECURE_YN"
 
 if [ "$SECURE_YN" = "y" ]; then
 	#     https://docs.docker.com/engine/security/https/
@@ -36,11 +39,14 @@ else
 	rm -Rf server.csr server.key server.crt
 fi
 
+# make docker registry storage
+mkdir -p /tmp/docker/registry
+
 vagrant destroy -f
 vagrant up
 
+# vagrant ssh registry
+# vagrant ssh client
+
 exit 0
-
-
-
   
