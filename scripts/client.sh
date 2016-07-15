@@ -40,7 +40,7 @@ sudo docker run -d --restart=always --name hello3 \
 
 #sudo docker run -ti --restart=always --name=hello3 registry.tz.com/test:0.1 /bin/bash
 
-sudo docker ps -a
+sudo docker ps -a | grep test
 sudo docker history registry.tz.com/test:0.1
 sudo docker inspect registry.tz.com/test:0.1
 

@@ -30,15 +30,22 @@ sudo apt-get install nginx -y
 sudo sh -c "echo '' >> /etc/hosts"
 sudo sh -c "echo '192.168.82.170 registry.tz.com' >> /etc/hosts"
 
-### [make docker-registry / nginx-registry] ############################################################################################################
-
+### [docker-registry] ##################################################################################################
 #sudo docker rm docker-registry
 sudo docker run -d --restart=always --name docker-registry \
     -v /tmp/registry:/tmp/registry \
     registry:0.8.1
 
-#sudo docker rm nginx-registry
-sudo docker run -d --restart=always --name nginx-registry \
+#sudo docker run -d --restart=always --name docker-registry \
+#    -v /tmp/registry:/tmp/registry \
+#	registry:2
+
+#sudo docker stop docker-registry
+#sudo docker start docker-registry
+
+### [domain registry] ##################################################################################################
+#sudo docker rm domain-registry
+sudo docker run -d --restart=always --name domain-registry \
     -v /vagrant/resources/nginx/register.conf:/etc/nginx/nginx.conf \
     -v /vagrant/.htpasswd:/etc/nginx/.htpasswd \
     -v /vagrant/server.key:/etc/server.key \
@@ -49,11 +56,8 @@ sudo docker run -d --restart=always --name nginx-registry \
 
 sudo docker ps -a
 
-#sudo docker stop nginx-registry
-#sudo docker start nginx-registry
-
-#sudo docker stop docker-registry
-#sudo docker start docker-registry
+#sudo docker stop domain-registry
+#sudo docker start domain-registry
 
 ### [make test docker image] ###########################################################################################
 cd /home/vagrant
@@ -62,14 +66,14 @@ sudo cp /vagrant/resources/docker/Dockerfile /home/vagrant
 sudo docker build --tag test:0.1 .
 sudo docker images
 
-#sudo docker rm test
+#sudo docker rmi test:0.1
 #sudo docker run -d -p 8080:8080 --name test -v /tmp/registry:/tmp/registry registry
 #sudo docker run -ti -p 8080:8080 --name test -v /tmp/registry:/tmp/registry registry
 
 # sudo service docker restart
 # sudo docker rmi test:0.1
 
-### [push test image to external server with https] ############################################################################################################
+### [push test image to external server with https] ####################################################################
 #sudo docker login https://registry.tz.com
 sudo docker login --username=testuser --password=pswd1234 https://registry.tz.com
 

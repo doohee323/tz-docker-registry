@@ -22,7 +22,7 @@
 		install docker
 		make test docker image
 		install nginx
-		make docker-registry / nginx-registry
+		make docker-registry / domain-registry
 		push test image to external server with https
 	3. make client registry VM (client.sh)
 		update certs
@@ -33,6 +33,10 @@
 * check out docker client
 ```
 	http://192.168.82.171:8080/
-	
 	Username: admin Password: shipyard
+```
+
+* Running Docker Trusted Registry in AWS
+```
+	https://www.youtube.com/watch?v=t7yQPbfvYvs
 ```
