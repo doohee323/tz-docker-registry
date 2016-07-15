@@ -3,10 +3,13 @@
 # Get root up in here
 set -x
 
+#cf. https://docs.docker.com/engine/security/https/
+# http://blog.naver.com/PostView.nhn?blogId=alice_k106&logNo=220743690397&parentCategoryNo=&categoryNo=&viewDate=&isShowPopularPosts=false&from=postView
+
 ### [make certs] ############################################################################################################
 echo "==================================================="
-echo " * not required: email / password"
 echo " * required: common name: registry.tz.com"
+echo " * not required: email / password"
 echo "==================================================="
 openssl genrsa -out server.key 2048
 # cf. US / CA / SF / TZ / CTO / registry.tz.com

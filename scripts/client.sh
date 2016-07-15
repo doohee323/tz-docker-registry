@@ -51,5 +51,8 @@ echo "Now you can access to registry server through https://registry.tz.com/ wit
 echo " - need to add 192.168.82.171 registry.tz.com into /etc/hosts."
 echo "You can access to the nginx on docker container through http://192.168.82.171."
 
+# install shipyard
+curl -sSL https://shipyard-project.com/deploy | bash -s
+
 exit 0
 

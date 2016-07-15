@@ -29,3 +29,10 @@
 		install docker
 		pull test image from external server with https
 ```
+
+* check out docker client
+```
+	http://192.168.82.171:8080/
+	
+	Username: admin Password: shipyard
+```
