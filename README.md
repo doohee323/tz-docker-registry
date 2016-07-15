@@ -17,7 +17,7 @@
 * workflow
 ```
 	1. make cert before making vagrant VMs (nginx Basic Authentication for docker registry)
-	2. make docker registry VM (docker.sh)
+	2. make docker registry VM (registry.sh)
 		update certs
 		install docker
 		make test docker image
