@@ -25,27 +25,30 @@ sudo update-ca-certificates
 
 ### [pull test image from external server with https] ##########################################################################
 sudo docker login --username=testuser --password=pswd1234 https://registry.tz.com
+
+sudo docker stop hello3
+# sudo docker start hello3
+sudo docker rm hello3
+sudo docker rmi registry.tz.com/test:0.1
+
 sudo docker pull registry.tz.com/test:0.1
 sudo docker images
 
-# sudo docker build --tag hello:0.2 .
-# sudo docker run --name hello-nginx2 -d -p 80:80 -v /root/data:/data hello:0.2
-# sudo cp /vagrant/resources/docker/Dockerfile /home/vagrant
-
-sudo docker run -d --restart=always --name hello3 \
+sudo docker run -d --restart=always -p 8000:80 --name hello3 \
     -v /vagrant/resources/nginx/client.conf:/etc/nginx/nginx.conf \
-	registry.tz.com/test:0.1 /bin/bash
+    registry.tz.com/test:0.1 /bin/bash
+
+#sudo docker run -ti --rm -p 8000:80 --name hello3 \
+#    -v /vagrant/resources/nginx/client.conf:/etc/nginx/nginx.conf \
+#    registry.tz.com/test:0.1 /bin/bash
 
 #sudo docker logs -f -t 3caeabfd5f34ad6cb0fb800dd81fdf43cb9e9029a7cfc1235f0ded5ac6d3a63e
 
 #sudo docker run -ti --restart=always --name=hello3 registry.tz.com/test:0.1 /bin/bash
 
-sudo docker ps -a | grep test
+sudo docker ps -a | grep hello3
 sudo docker history registry.tz.com/test:0.1
 sudo docker inspect registry.tz.com/test:0.1
-
-# sudo docker stop hello3
-# sudo docker start hello3
 
 echo "Now you can access to registry server through https://registry.tz.com/ with testuser/pswd1234."
 echo " - need to add 192.168.82.171 registry.tz.com into /etc/hosts."
