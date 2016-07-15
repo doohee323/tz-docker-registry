@@ -36,6 +36,8 @@ sudo docker run -d --restart=always --name hello3 \
     -v /vagrant/resources/nginx/client.conf:/etc/nginx/nginx.conf \
 	registry.tz.com/test:0.1 /bin/bash
 
+#sudo docker logs -f -t 3caeabfd5f34ad6cb0fb800dd81fdf43cb9e9029a7cfc1235f0ded5ac6d3a63e
+
 #sudo docker run -ti --restart=always --name=hello3 registry.tz.com/test:0.1 /bin/bash
 
 sudo docker ps -a
