@@ -32,7 +32,11 @@ sudo docker images
 # sudo docker run --name hello-nginx2 -d -p 80:80 -v /root/data:/data hello:0.2
 # sudo cp /vagrant/resources/docker/Dockerfile /home/vagrant
 
-sudo docker run -d --restart=always --name hello3 registry.tz.com/test:0.1 /bin/bash
+sudo docker run -d --restart=always --name hello3 \
+    -v /vagrant/resources/nginx/client.conf:/etc/nginx/nginx.conf \
+	registry.tz.com/test:0.1 /bin/bash
+
+#sudo docker run -ti --restart=always --name=hello3 registry.tz.com/test:0.1 /bin/bash
 
 sudo docker ps -a
 sudo docker history registry.tz.com/test:0.1

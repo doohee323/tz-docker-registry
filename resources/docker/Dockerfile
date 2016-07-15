@@ -3,8 +3,6 @@ MAINTAINER Foo Bar <foo@bar.com>
 
 RUN apt-get update
 RUN apt-get install -y nginx
-# sudo mkdir -p /etc/nginx
-# sudo cp /vagrant/resources/nginx/client.conf /etc/nginx/nginx.conf
 RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
 RUN chown -R www-data:www-data /var/lib/nginx
 

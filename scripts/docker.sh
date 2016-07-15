@@ -56,10 +56,15 @@ sudo docker ps -a
 #sudo docker start docker-registry
 
 ### [make test docker image] ###########################################################################################
-sudo cp /vagrant/resources/docker/Dockerfile /home/vagrant
 cd /home/vagrant
+#sudo cp /vagrant/resources/nginx/client.conf /etc/nginx/nginx.conf
+sudo cp /vagrant/resources/docker/Dockerfile /home/vagrant
 sudo docker build --tag test:0.1 .
 sudo docker images
+
+#sudo docker rm test
+#sudo docker run -d -p 8080:8080 --name test -v /tmp/registry:/tmp/registry registry
+#sudo docker run -ti -p 8080:8080 --name test -v /tmp/registry:/tmp/registry registry
 
 # sudo service docker restart
 # sudo docker rmi test:0.1
@@ -71,7 +76,16 @@ sudo docker login --username=testuser --password=pswd1234 https://registry.tz.co
 sudo docker tag test:0.1 registry.tz.com/test:0.1
 sudo docker push registry.tz.com/test:0.1
 
+# sudo docker ps -a
+# sudo docker commit -a "dewey hong <doohee323@tz.com>" -m "changed contents!" container_id test:0.1
+
 exit 0
 
 
-  
+
+
+
+
+
+
+
