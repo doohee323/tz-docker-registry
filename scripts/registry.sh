@@ -22,43 +22,41 @@ sudo sh -c "echo '' >> /etc/hosts"
 sudo sh -c "echo '192.168.82.170 registry.tz.com' >> /etc/hosts"
 
 ### [update certs] ############################################################################################################
-sudo cp /vagrant/server.crt /usr/share/ca-certificates/
-echo "server.crt" | sudo tee -a /etc/ca-certificates.conf
+sudo cp /vagrant/domain.crt /usr/share/ca-certificates/
+echo "domain.crt" | sudo tee -a /etc/ca-certificates.conf
 sudo update-ca-certificates
 
 ### [docker-registry] ##################################################################################################
-sudo docker stop docker-registry
-#sudo docker start docker-registry
-sudo docker rm docker-registry
-sudo docker run -d --restart=always --name docker-registry \
-    -v /tmp/registry:/tmp/docker/registry \
-    registry:0.9.1
+mkdir -p certs
+sudo mkdir -p /certs
+sudo cp /vagrant/domain.* /certs
 
-### [domain registry] ##################################################################################################
-sudo docker stop domain-registry
-#sudo docker start domain-registry
-sudo docker rm domain-registry
-sudo docker run -d --restart=always --name domain-registry \
-    -v /vagrant/resources/nginx/register.conf:/etc/nginx/nginx.conf \
-    -v /vagrant/.htpasswd:/etc/nginx/.htpasswd \
-    -v /vagrant/server.key:/etc/server.key \
-    -v /vagrant/server.crt:/etc/server.crt \
-    --link docker-registry:docker-registry \
-    -p 443:443 \
-    nginx:1.7.5
+sudo mkdir auth
+sudo docker run --entrypoint htpasswd registry:2 -Bbn testuser testpassword > auth/htpasswd
+
+sudo docker stop registry
+sudo docker rm registry
+sudo docker run -d --restart=always -p 5000:5000 --name registry \
+  -v `pwd`/auth:/auth \
+  -e "REGISTRY_AUTH=htpasswd" \
+  -e "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" \
+  -e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd \
+  -v `pwd`/certs:/certs \
+  -v /vagrant/domain.crt:/certs/domain.crt \
+  -v /vagrant/domain.key:/certs/domain.key \
+  -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/domain.crt \
+  -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
+  registry:2
 
 sudo docker ps -a
+
+# install shipyard
+curl -sSL https://shipyard-project.com/deploy | bash -s
 
 # for test image
 bash /vagrant/scripts/buildTest.sh
 
 exit 0
-
-
-
-
-
-
 
 
 

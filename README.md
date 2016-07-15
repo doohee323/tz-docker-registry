@@ -32,6 +32,9 @@
 
 * check out docker client
 ```
+	* docker registry
+	http://192.168.82.170:8080/
+	* docker client
 	http://192.168.82.171:8080/
 	Username: admin Password: shipyard
 ```
