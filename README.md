@@ -1,4 +1,4 @@
-# run external docker registry in vagrant (with nginx Basic Authentication)
+# run external docker registry in vagrant (with x509/Basic Authentication)
 
 * required
 ```
@@ -16,7 +16,7 @@
 	
 * workflow
 ```
-	1. make cert before making vagrant VMs (nginx Basic Authentication for docker registry)
+	1. make cert before making vagrant VMs (x509/Basic Authentication for docker registry)
 	2. make docker registry VM (registry.sh)
 		update certs
 		install docker
