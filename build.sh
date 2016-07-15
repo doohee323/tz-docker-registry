@@ -24,6 +24,8 @@ openssl x509 -req -days 365 -in domain.csr -signkey domain.key -out domain.crt
 # make docker registry storage
 mkdir -p /tmp/docker/registry
 
+exit 0
+
 vagrant destroy -f
 vagrant up
 

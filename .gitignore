@@ -1,5 +1,5 @@
-/server.crt
-/server.csr
-/server.key
+/domain.crt
+/domain.csr
+/domain.key
 /.htpasswd
 /.vagrant/
