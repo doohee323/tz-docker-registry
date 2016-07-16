@@ -1,6 +1,6 @@
-# run external docker registry in vagrant (with x509/Basic Authentication)
+# Run external docker registry in vagrant (with x509/Basic Authentication)
 
-* required
+* Required
 ```
 	- install vagrant 4.3
 	https://www.virtualbox.org/wiki/Download_Old_Builds_4_3
@@ -8,28 +8,30 @@
 	cf. vagrant box add ubuntu/trusty64
 ```
 
-* run		
+* Run		
 ```
 	bash build.sh
 ```	
 	
-* workflow
+* Workflow
 ```
 	1. make cert before making vagrant VMs (x509/Basic Authentication for docker registry)
 	2. make docker registry VM (registry.sh)
-		update certs
 		install docker
 		make test docker image
 		install nginx
-		make docker-registry / domain-registry
-		push test image to external server with https
-	3. make client registry VM (client.sh)
 		update certs
+		make docker-registry
+	3. push test image on registry server for test
+		make test image
+		push test image to external server
+	4. make client registry VM (client.sh)
 		install docker
-		pull test image from external server with https
+		update certs
+		pull test image from external server
 ```
 
-* check out docker client
+* Check out docker client
 ```
 	* docker registry
 	http://192.168.82.170:8080/
@@ -38,7 +40,7 @@
 	Username: admin Password: shipyard
 ```
 
-* use docker registry on vagrant from other machine
+* Use docker registry on vagrant from other machine
 ```
   - On host server of vagrant
 	1. virtualbox network setting 
