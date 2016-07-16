@@ -6,7 +6,6 @@
 	https://www.virtualbox.org/wiki/Download_Old_Builds_4_3
 	http://download.virtualbox.org/virtualbox/4.3.34/VirtualBox-4.3.34-104062-OSX.dmg
 	cf. vagrant box add ubuntu/trusty64
-		vagrant box add precise64 http://files.vagrantup.com/precise64.box
 ```
 
 * run		
