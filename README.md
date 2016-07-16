@@ -39,7 +39,26 @@
 	Username: admin Password: shipyard
 ```
 
-* Running Docker Trusted Registry in AWS
+* use docker registry on vagrant from other machine
 ```
-	https://www.youtube.com/watch?v=t7yQPbfvYvs
+  - On host server of vagrant
+	1. virtualbox network setting 
+		- Adapter 1
+			- Attached to: Bridged Adapter
+			- Name: eth0
+			- Promiscuous mode: Allow VMs
+	2. open host server firewall 	
+		ex) sudo ufw allow 5000/tcp
+  - On PC to use docker registry
+    1. register VM's external IP as domain in hosts
+    	ex) vi /etc/hosts
+    		172.30.12.125	registry.tz.com
+	2. get domain.crt from the host server of vagrant
+		sudo cp domain.crt /usr/share/ca-certificates/
+		echo "domain.crt" | sudo tee -a /etc/ca-certificates.conf
+		sudo update-ca-certificates
+	3. test
+		sudo docker login --username=testuser --password=testpassword https://registry.tz.com:5000
+		sudo docker pull registry.tz.com:5000/test:0.1
+		sudo docker images
 ```
