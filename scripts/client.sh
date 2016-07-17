@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 
-# Get root up in here
 set -x
-
-echo "Reading config...." >&2
-source /vagrant/setup.rc
 
 echo '' >> /etc/hosts
 echo '192.168.82.170	registry.tz.com' >> /etc/hosts
@@ -26,36 +22,19 @@ sudo update-ca-certificates
 ### [pull test image from external server with https] ##########################################################################
 sudo docker login --username=testuser --password=testpassword https://registry.tz.com:5000
 
-sudo docker stop hello3
-# sudo docker start hello3
-sudo docker rm hello3
-sudo docker rmi registry.tz.com:5000/test:0.1
-
-sudo docker pull registry.tz.com:5000/test:0.1
-sudo docker images
-
-sudo docker run -d --restart=always -p 8000:80 --name hello3 \
-    -v /vagrant/resources/nginx/client.conf:/etc/nginx/nginx.conf \
-    registry.tz.com:5000/test:0.1 /bin/bash
-
-#sudo docker run -ti --rm -p 8000:80 --name hello3 \
-#    -v /vagrant/resources/nginx/client.conf:/etc/nginx/nginx.conf \
-#    registry.tz.com:5000/test:0.1 /bin/bash  &
-
-#sudo docker logs -f -t 3caeabfd5f34ad6cb0fb800dd81fdf43cb9e9029a7cfc1235f0ded5ac6d3a63e
-
-#sudo docker run -ti --restart=always --name=hello3 registry.tz.com:5000/test:0.1 /bin/bash
-
-sudo docker ps -a | grep hello3
-sudo docker history registry.tz.com:5000/test:0.1
-sudo docker inspect registry.tz.com:5000/test:0.1
+# install shipyard
+curl -sSL https://shipyard-project.com/deploy | bash -s
 
 echo "Now you can access to registry server through https://registry.tz.com:5000/ with testuser/pswd1234."
 echo " - need to add 192.168.82.171 registry.tz.com into /etc/hosts."
 echo "You can access to the nginx on docker container through http://192.168.82.171."
 
-# install shipyard
-curl -sSL https://shipyard-project.com/deploy | bash -s
+# for test image
+bash /vagrant/scripts/clientNginx.sh
+
+bash /vagrant/scripts/clientNode.sh
+
+# docker run --rm -ti -p 3000:3000 -e INSTANCE=instance1 -e HOST=myhost rosskukulinski/nodeapp1
 
 exit 0
 

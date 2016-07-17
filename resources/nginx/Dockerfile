@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-MAINTAINER Foo Bar <foo@bar.com>
+#MAINTAINER Dewey Hong <doohee323@tz.com>
 
 RUN apt-get update
 RUN apt-get install -y nginx
@@ -10,7 +10,7 @@ VOLUME ["/data", "/etc/nginx/site-enabled", "/var/log/nginx"]
 
 WORKDIR /etc/nginx
 
-CMD ["nginx"]
+#CMD ["nginx"]
+CMD service nginx start
 
-EXPOSE 80
-EXPOSE 443
+EXPOSE 8000

@@ -30,6 +30,7 @@ openssl genrsa -out domain.key 2048
  
 openssl req -new -key domain.key -out domain.csr
 openssl x509 -req -days 365 -in domain.csr -signkey domain.key -out domain.crt
+openssl x509 -inform DER -in domain.crt -out domain.pem -text
 
 ### [run vagrant] ############################################################################################################
 

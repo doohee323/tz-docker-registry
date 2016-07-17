@@ -6,6 +6,8 @@
 	https://www.virtualbox.org/wiki/Download_Old_Builds_4_3
 	http://download.virtualbox.org/virtualbox/4.3.34/VirtualBox-4.3.34-104062-OSX.dmg
 	cf. vagrant box add ubuntu/trusty64
+	
+	- Need to add 192.168.82.171 registry.tz.com into /etc/hosts
 ```
 
 * Run		
@@ -60,6 +62,8 @@
 		sudo update-ca-certificates
 	3. test
 		sudo docker login --username=testuser --password=testpassword https://registry.tz.com:5000
-		sudo docker pull registry.tz.com:5000/test:0.1
+		sudo docker pull registry.tz.com:5000/testnginx:0.1
 		sudo docker images
 ```
+
+

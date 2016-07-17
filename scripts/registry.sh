@@ -54,7 +54,9 @@ sudo docker ps -a
 curl -sSL https://shipyard-project.com/deploy | bash -s
 
 # for test image
-bash /vagrant/scripts/buildTest.sh
+bash /vagrant/scripts/buildNginx.sh
+
+bash /vagrant/scripts/buildNode.sh
 
 exit 0
 
