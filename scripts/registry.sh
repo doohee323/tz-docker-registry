@@ -15,7 +15,7 @@ sudo usermod -aG docker vagrant
 sudo chown -Rf vagrant:vagrant /home/vagrant
 
 ### [nginx] ############################################################################################################
-sudo apt-get install nginx -y
+#sudo apt-get install nginx -y
 
 #sudo chown -Rf vagrant:vagrant /etc/hosts
 sudo sh -c "echo '' >> /etc/hosts"

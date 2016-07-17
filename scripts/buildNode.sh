@@ -10,7 +10,10 @@ cd nodeapp
 sudo docker build --tag testnode:0.1 .
 sudo docker images
 
-# sudo service docker restart
+### [update certs] ############################################################################################################
+sudo cp /vagrant/domain.crt /usr/share/ca-certificates/
+echo "domain.crt" | sudo tee -a /etc/ca-certificates.conf
+sudo update-ca-certificates
 
 ### [update certs] ############################################################################################################
 sudo cp /vagrant/domain.crt /usr/share/ca-certificates/
