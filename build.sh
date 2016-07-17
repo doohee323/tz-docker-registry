@@ -7,6 +7,18 @@ set +x
 
 set -x
 
+export TEST_YN="n";
+echo "Do you want to make a test VM? (y/n)? "
+read TEST_YN
+echo "You entered: $TEST_YN"
+
+rm -Rf setup.conf
+if [ "$TEST_YN" = "y" ]; then
+	cp test_y.conf setup.conf
+else
+	cp test_n.conf setup.conf
+fi
+
 # cf. https://docs.docker.com/engine/security/https/
 ### [make certs] ############################################################################################################
 echo "==================================================="
