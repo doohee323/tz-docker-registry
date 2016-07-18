@@ -50,7 +50,7 @@ sudo docker run -d --restart=always -p 5000:5000 --name registry \
 sudo docker ps -a
 
 # install shipyard
-#curl -sSL https://shipyard-project.com/deploy | bash -s
+curl -sSL https://shipyard-project.com/deploy | bash -s
 
 # for test image
 bash /vagrant/scripts/buildNginx.sh

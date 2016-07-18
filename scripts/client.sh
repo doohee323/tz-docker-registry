@@ -20,7 +20,7 @@ echo "domain.crt" | sudo tee -a /etc/ca-certificates.conf
 sudo update-ca-certificates
 
 # install shipyard
-#curl -sSL https://shipyard-project.com/deploy | bash -s
+curl -sSL https://shipyard-project.com/deploy | bash -s
 
 echo "Now you can access to registry server through https://registry.tz.com:5000/ with testuser/pswd1234."
 echo " - need to add 192.168.82.171 registry.tz.com into /etc/hosts."

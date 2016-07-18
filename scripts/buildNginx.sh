@@ -21,7 +21,8 @@ sudo cp /vagrant/domain.crt /usr/share/ca-certificates/
 echo "domain.crt" | sudo tee -a /etc/ca-certificates.conf
 sudo update-ca-certificates
 
-sudo docker run --entrypoint htpasswd registry:2 -Bbn testuser testpassword > auth/htpasswd
+### [pull test image from external server with https] ##########################################################################
+sudo docker login --username=testuser --password=testpassword https://registry.tz.com:5000
 
 sudo docker rmi registry.tz.com:5000/testnginx:0.1
 sudo docker tag testnginx:0.1 registry.tz.com:5000/testnginx:0.1

@@ -66,4 +66,21 @@
 		sudo docker images
 ```
 
+* Test app deploy on docker client
+```
+	1. check out on webpage
+		- Nginx: http://192.168.82.171:8000/
+		- Node.js: http://192.168.82.171:3000/
+	2. look into log
+		vagrant ssh client
+		docker ps -a | grep /test
+		4215b414afac        registry.tz.com:5000/testnode:0.1    "/usr/local/bin/node "   node3
+		df4a82a9810e        registry.tz.com:5000/testnginx:0.1   "nginx"                  nginx3
+		- Nginx: sudo docker logs -f -t 4215b414afac
+		- Node.js: sudo docker logs -f -t df4a82a9810e
+	3. go to the container
+		- Nginx: sudo docker exec -i -t 4215b414afac /bin/bash
+		- Node.js: sudo docker exec -i -t df4a82a9810e /bin/bash
+```
+
 
