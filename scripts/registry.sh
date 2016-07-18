@@ -19,7 +19,7 @@ sudo apt-get install nginx -y
 
 #sudo chown -Rf vagrant:vagrant /etc/hosts
 sudo sh -c "echo '' >> /etc/hosts"
-sudo sh -c "echo '192.168.82.170 registry.tz.com' >> /etc/hosts"
+sudo sh -c "echo '172.30.12.68 registry.tz.com' >> /etc/hosts"
 
 ### [update certs] ############################################################################################################
 sudo cp /vagrant/domain.crt /usr/share/ca-certificates/
@@ -54,9 +54,9 @@ sudo docker ps -a
 curl -sSL https://shipyard-project.com/deploy | bash -s
 
 # for test image
-bash /vagrant/scripts/nginx/build.sh
+#bash /vagrant/scripts/nginx/build.sh
 
-bash /vagrant/scripts/nodejs/build.sh
+#bash /vagrant/scripts/nodejs/build.sh
 
 exit 0
 

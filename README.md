@@ -45,17 +45,19 @@
 * Use docker registry on vagrant from other machine
 ```
   - On host server of vagrant
-	1. virtualbox network setting 
-		- Adapter 1
-			- Attached to: Bridged Adapter
-			- Name: eth0
-			- Promiscuous mode: Allow VMs
-	2. open host server firewall 	
+    1. bash build.sh
+    	Do you want to make a test VM? (y/n)? n
+    2. In installation, select your host's network interfaces for bridged network interfaces:
+	3. open host server firewall
 		ex) sudo ufw allow 5000/tcp
   - On PC to use docker registry
     1. register VM's external IP as domain in hosts
     	ex) vi /etc/hosts
-    		172.30.12.125	registry.tz.com
+    		172.30.12.92	registry.tz.com
+    	cf) vagrant ssh registry
+    		vagrant@registry:~$ ifconfig
+    		eth1      Link encap:Ethernet  HWaddr 08:00:27:~
+          	inet addr:172.30.12.92  Bcast:172.30.15.255  Mask:255.255.252.0
 	2. get domain.crt from the host server of vagrant
 		sudo cp domain.crt /usr/share/ca-certificates/
 		echo "domain.crt" | sudo tee -a /etc/ca-certificates.conf

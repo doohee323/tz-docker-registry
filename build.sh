@@ -5,8 +5,6 @@ set +x
 # cf. https://docs.docker.com/registry/deploying/
 #     https://github.com/docker/docker-registry
 
-set -x
-
 export TEST_YN="n";
 echo "Do you want to make a test VM? (y/n)? "
 read TEST_YN
@@ -15,9 +13,17 @@ echo "You entered: $TEST_YN"
 rm -Rf setup.conf
 if [ "$TEST_YN" = "y" ]; then
 	cp test_y.conf setup.conf
+	sed -i "s/#node.vm.network :private_network/node.vm.network :private_network/g" Vagrantfile
+	sed -i "s/node.vm.network :public_network/#node.vm.network :public_network/g" Vagrantfile
+	sed -i "s/##/#/g" Vagrantfile
 else
 	cp test_n.conf setup.conf
+	sed -i "s/node.vm.network :private_network/#node.vm.network :private_network/g" Vagrantfile
+	sed -i "s/#node.vm.network :public_network/node.vm.network :public_network/g" Vagrantfile
+	sed -i "s/##/#/g" Vagrantfile
 fi
+
+set -x
 
 # cf. https://docs.docker.com/engine/security/https/
 ### [make certs] ############################################################################################################
