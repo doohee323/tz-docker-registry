@@ -27,14 +27,13 @@ echo "domain.crt" | sudo tee -a /etc/ca-certificates.conf
 sudo update-ca-certificates
 
 ### [docker-registry] ##################################################################################################
-mkdir -p certs
 sudo mkdir -p /certs
 sudo cp /vagrant/domain.* /certs
 
-sudo mkdir auth
-sudo docker run --entrypoint htpasswd registry:2 -Bbn testuser testpassword > auth/htpasswd
+sudo mkdir -p /auth
+sudo docker run --entrypoint htpasswd registry:2 -Bbn testuser testpassword > /auth/htpasswd
 
-sudo docker stop registry
+sudo docker stop -f registry
 sudo docker rm registry
 sudo docker run -d --restart=always -p 5000:5000 --name registry \
   -v `pwd`/auth:/auth \
@@ -51,7 +50,7 @@ sudo docker run -d --restart=always -p 5000:5000 --name registry \
 sudo docker ps -a
 
 # install shipyard
-curl -sSL https://shipyard-project.com/deploy | bash -s
+#curl -sSL https://shipyard-project.com/deploy | bash -s
 
 # for test image
 bash /vagrant/scripts/buildNginx.sh
