@@ -27,11 +27,11 @@ echo " - need to add 192.168.82.171 registry.tz.com into /etc/hosts."
 echo "You can access to the nginx on docker container through http://192.168.82.171."
 
 # for test image
-bash /vagrant/scripts/clientNginx.sh
+bash /vagrant/scripts/nginx/client.sh
 
-bash /vagrant/scripts/clientNode.sh
+bash /vagrant/scripts/nodejs/client.sh
 
-# docker run --rm -ti -p 3000:3000 -e INSTANCE=instance1 -e HOST=myhost rosskukulinski/nodeapp1
+# docker run --rm -ti -p 3000:3000 -e INSTANCE=instance1 -e HOST=myhost rosskukulinski/nodejs1
 
 exit 0
 

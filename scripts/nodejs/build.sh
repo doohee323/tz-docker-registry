@@ -5,8 +5,8 @@ set -x
 ### [make test node docker image] ###########################################################################################
 cd /home/vagrant
 sudo docker rmi testnode:0.1
-sudo cp -Rf /vagrant/resources/nodeapp /home/vagrant
-cd nodeapp
+sudo cp -Rf /vagrant/resources/nodejs /home/vagrant
+cd nodejs
 sudo docker build --tag testnode:0.1 .
 sudo docker images
 
