@@ -15,7 +15,7 @@ sudo usermod -aG docker vagrant
 sudo chown -Rf vagrant:vagrant /home/vagrant
 
 ### [nginx] ############################################################################################################
-#sudo apt-get install nginx -y
+sudo apt-get install nginx -y
 
 #sudo chown -Rf vagrant:vagrant /etc/hosts
 sudo sh -c "echo '' >> /etc/hosts"
@@ -27,11 +27,12 @@ echo "domain.crt" | sudo tee -a /etc/ca-certificates.conf
 sudo update-ca-certificates
 
 ### [docker-registry] ##################################################################################################
+mkdir -p certs
 sudo mkdir -p /certs
 sudo cp /vagrant/domain.* /certs
 
-sudo mkdir -p /auth
-sudo docker run --entrypoint htpasswd registry:2 -Bbn testuser testpassword > /auth/htpasswd
+sudo mkdir auth
+sudo docker run --entrypoint htpasswd registry:2 -Bbn testuser testpassword > auth/htpasswd
 
 sudo docker stop registry
 sudo docker rm registry
