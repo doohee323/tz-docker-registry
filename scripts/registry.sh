@@ -33,7 +33,7 @@ sudo cp /vagrant/domain.* /certs
 sudo mkdir -p /auth
 sudo docker run --entrypoint htpasswd registry:2 -Bbn testuser testpassword > /auth/htpasswd
 
-sudo docker stop -f registry
+sudo docker stop registry
 sudo docker rm registry
 sudo docker run -d --restart=always -p 5000:5000 --name registry \
   -v `pwd`/auth:/auth \
