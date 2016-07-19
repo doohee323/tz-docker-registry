@@ -2,6 +2,9 @@
 
 set -x
 
+TEST_Y=`grep ' node.vm.network :private_network' /vagrant/Vagrantfile`
+echo $TEST_Y
+
 sudo apt-get -y install apache2-utils
 
 ### [install docker] ############################################################################################################
@@ -17,9 +20,15 @@ sudo chown -Rf vagrant:vagrant /home/vagrant
 ### [nginx] ############################################################################################################
 sudo apt-get install nginx -y
 
+export ip=$(ip addr show eth1 | grep -Po 'inet \K[\d.]+')
+
 #sudo chown -Rf vagrant:vagrant /etc/hosts
 sudo sh -c "echo '' >> /etc/hosts"
-sudo sh -c "echo '172.30.12.92 registry.tz.com' >> /etc/hosts"
+if [ "$TEST_Y" != "" ]; then  # test
+	sudo sh -c "echo '172.30.12.92 registry.tz.com' >> /etc/hosts"
+else
+	sudo sh -c "echo '$ip registry.tz.com' >> /etc/hosts"
+fi
 
 ### [update certs] ############################################################################################################
 sudo cp /vagrant/domain.crt /usr/share/ca-certificates/
@@ -54,9 +63,7 @@ sudo docker ps -a
 curl -sSL https://shipyard-project.com/deploy | bash -s
 
 # for test image
-TEST_Y=`grep ' node.vm.network :private_network' Vagrantfile`
-
-if [ "$TEST_Y" != "" ]; then
+if [ "$TEST_Y" != "" ]; then  # test
 	echo "build test image"
 	bash /vagrant/scripts/nginx/build.sh
 	bash /vagrant/scripts/nodejs/build.sh
