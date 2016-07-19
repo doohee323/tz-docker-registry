@@ -1,12 +1,8 @@
 {
-  "name": "docker-node-app",
-  "version": "1.0.0",
-  "description": "dockerized nodejs application",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Dewey Hong <doohee323@tz.com>",
+  "name": "exampleapp",
+  "description": "Hello Docker",
+  "version": "0.0.1",
   "dependencies": {
+    "express": "4.4.x"
   }
 }
