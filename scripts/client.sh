@@ -2,8 +2,8 @@
 
 set -x
 
-echo '' >> /etc/hosts
-echo '192.168.82.170	registry.tz.com' >> /etc/hosts
+sudo echo '' >> /etc/hosts
+sudo echo '172.30.12.138	registry.tz.com' >> /etc/hosts
 
 ### [install docker] ##########################################################################################################
 sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
@@ -28,8 +28,8 @@ echo "You can access to the nginx on docker container through http://192.168.82.
 
 # for test image
 bash /vagrant/scripts/nginx/client.sh
-
 bash /vagrant/scripts/nodejs/client.sh
+#bash /vagrant/scripts/bind9/client.sh
 
 # docker run --rm -ti -p 3000:3000 -e INSTANCE=instance1 -e HOST=myhost rosskukulinski/nodejs1
 

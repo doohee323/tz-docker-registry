@@ -65,8 +65,9 @@ curl -sSL https://shipyard-project.com/deploy | bash -s
 # for test image
 if [ "$TEST_Y" != "" ]; then  # test
 	echo "build test image"
-	bash /vagrant/scripts/nginx/build.sh
 	bash /vagrant/scripts/nodejs/build.sh
+	bash /vagrant/scripts/nginx/build.sh
+	#bash /vagrant/scripts/bind9/build.sh
 fi
 
 exit 0

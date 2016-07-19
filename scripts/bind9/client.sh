@@ -10,25 +10,50 @@ sudo update-ca-certificates
 ### [pull test image from external server with https] ##########################################################################
 sudo docker login --username=testuser --password=testpassword https://registry.tz.com:5000
 
-sudo docker stop nginx3
-# sudo docker start nginx3
-sudo docker rm nginx3
-sudo docker rmi registry.tz.com:5000/testnginx:0.1
+sudo docker stop bind93
+# sudo docker start bind93
+sudo docker rm bind93
+sudo docker rmi registry.tz.com:5000/testbind9:0.1
 
-sudo docker pull registry.tz.com:5000/testnginx:0.1
+sudo docker pull registry.tz.com:5000/testbind9:0.1
 sudo docker images
 
-sudo ufw allow 8000/tcp
+# host ip
+host_ip=`ip addr show eth0 | grep -Po 'inet \K[\d.]+'`
+echo "====== host_ip:"$host_ip
 
-sudo docker run -d --restart=always -p 8000:8000 --name nginx3 \
-    -v /vagrant/resources/nginx/client.conf:/etc/nginx/nginx.conf \
-    registry.tz.com:5000/testnginx:0.1
+sudo docker stop bind93
+sudo docker rm bind93
+sudo docker run -d --name bind93 \
+    registry.tz.com:5000/testbind9:0.1
 
-#sudo docker logs -f -t 3caeabfd5f34ad6cb0fb800dd81fdf43cb9e9029a7cfc1235f0ded5ac6d3a63e
+# container ip    
+docker-ip() {
+  sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$@"
+}
+export cont_ip=`docker-ip bind93`
+echo "====== cont_ip:"$cont_ip
 
-sudo docker ps -a | grep nginx3
-sudo docker history registry.tz.com:5000/testnginx:0.1
-sudo docker inspect registry.tz.com:5000/testnginx:0.1
+# container network setting  172.17.0.10
+sudo docker stop bind93
+sudo docker rm bind93
+sudo docker run -d -p 3000:3000 --name bind93 \
+	--add-host registry.tz.com:$cont_ip \
+	--hostname nserver \
+	--dns $cont_ip --dns 8.8.8.8 --dns-search tz.com \
+    registry.tz.com:5000/testbind9:0.1 &
+
+sleep 2
+sudo docker exec -d bind93 /bin/sed -i "s/PUBLIC_IP/$cont_ip/g" /etc/bind/db.tz.com
+sudo docker exec -d bind93 service bind9 start
+
+sudo docker ps -a | grep bind93
+#sudo docker exec -it bind93 /bin/bash
+#dig @registry.tz.com tz.com
+
+#sudo docker exec -it bind93 /bin/bash
+#dig @registry.tz.com tz.com
+#exit
 
 exit 0
 
