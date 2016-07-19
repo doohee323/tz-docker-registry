@@ -1,23 +1,24 @@
 #!/usr/bin/env bash
 
+sudo su
 set -x
 
-sudo echo '' >> /etc/hosts
-sudo echo '172.30.12.138	registry.tz.com' >> /etc/hosts
+ echo '' >> /etc/hosts
+ echo '172.30.12.138	registry.tz.com' >> /etc/hosts
 
 ### [install docker] ##########################################################################################################
-sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-#sudo chown -Rf vagrant:vagrant /etc/apt/sources.list.d
-sudo sh -c "echo 'deb https://apt.dockerproject.org/repo ubuntu-trusty main' > /etc/apt/sources.list.d/docker.list"
-sudo apt-get update
-sudo apt-get install docker-engine -y
+ apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+# chown -Rf vagrant:vagrant /etc/apt/sources.list.d
+ sh -c "echo 'deb https://apt.dockerproject.org/repo ubuntu-trusty main' > /etc/apt/sources.list.d/docker.list"
+ apt-get update
+ apt-get install docker-engine -y
 
-sudo usermod -aG docker vagrant
+ usermod -aG docker vagrant
 
 ### [update certs] ############################################################################################################
-sudo cp /vagrant/domain.crt /usr/share/ca-certificates/
-echo "domain.crt" | sudo tee -a /etc/ca-certificates.conf
-sudo update-ca-certificates
+ cp /vagrant/domain.crt /usr/share/ca-certificates/
+echo "domain.crt" |  tee -a /etc/ca-certificates.conf
+ update-ca-certificates
 
 # install shipyard
 curl -sSL https://shipyard-project.com/deploy | bash -s
