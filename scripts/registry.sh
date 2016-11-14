@@ -26,7 +26,7 @@ export ip=$(ip addr show eth1 | grep -Po 'inet \K[\d.]+')
 # chown -Rf vagrant:vagrant /etc/hosts
  sh -c "echo '' >> /etc/hosts"
 if [ "$TEST_Y" != "" ]; then  # test
-	 sh -c "echo '172.30.12.92 registry.tz.com' >> /etc/hosts"
+	 sh -c "echo '192.168.82.170 registry.tz.com' >> /etc/hosts"
 else
 	 sh -c "echo '$ip registry.tz.com' >> /etc/hosts"
 fi

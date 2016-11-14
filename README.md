@@ -53,11 +53,11 @@
   - On PC to use docker registry
     1. register VM's external IP as domain in hosts
     	ex) vi /etc/hosts
-    		172.30.12.92	registry.tz.com
+    		192.168.82.170	registry.tz.com
     	cf) vagrant ssh registry
     		vagrant@registry:~$ ifconfig
     		eth1      Link encap:Ethernet  HWaddr 08:00:27:~
-          	inet addr:172.30.12.92  Bcast:172.30.15.255  Mask:255.255.252.0
+          	inet addr:192.168.82.170  Bcast:172.30.15.255  Mask:255.255.252.0
 	2. get domain.crt from the host server of vagrant
 		 cp domain.crt /usr/share/ca-certificates/
 		echo "domain.crt" |  tee -a /etc/ca-certificates.conf

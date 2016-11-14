@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 sudo su
-set -x
+#set -x
 
  echo '' >> /etc/hosts
- echo '172.30.12.138	registry.tz.com' >> /etc/hosts
+ echo '192.168.82.170	registry.tz.com' >> /etc/hosts
 
 ### [install docker] ##########################################################################################################
  apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
