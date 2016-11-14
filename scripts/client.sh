@@ -27,7 +27,7 @@ echo "Now you can access to registry server through https://registry.tz.com:5000
 echo " - need to add 192.168.82.171 registry.tz.com into /etc/hosts."
 echo "You can access to the nginx on docker container through http://192.168.82.171."
 
-# for test image
+# for test using image
 bash /vagrant/scripts/nginx/client.sh
 bash /vagrant/scripts/nodejs/client.sh
 #bash /vagrant/scripts/bind9/client.sh

@@ -63,7 +63,7 @@ mkdir -p certs
 # install shipyard
 curl -sSL https://shipyard-project.com/deploy | bash -s
 
-# for test image
+# for test building image
 if [ "$TEST_Y" != "" ]; then  # test
 	echo "build test image"
 	bash /vagrant/scripts/nodejs/build.sh
