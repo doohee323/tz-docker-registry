@@ -1,43 +1,25 @@
 server {
-    listen 80;
+    listen       443;
+    server_name  registry.tz.com;
 
-    root /var/www/html;
-    index index.jsp index.html index.htm;
+    ssl on;
+    ssl_certificate /etc/domain.crt;
+    ssl_certificate_key /etc/domain.key;
 
-    #server_name kr.sodatransfer.com;
+    proxy_set_header Host           $http_host;
+    proxy_set_header X-Real-IP      $remote_addr;
+    proxy_set_header Authorization  "";
 
-    error_page 404 /404.html;
-    error_page 500 502 503 504 /50x.html;
+    client_max_body_size 0;
 
-    #location /.well-known {
-    #    root /var/www/html;
-    #    allow all;
-    #}
+    chunked_transfer_encoding on;
 
-    server {
-        listen       443;
-        server_name  registry.tz.com;
+    location / {
+        proxy_pass          http://docker-registry:5000;
+        proxy_set_header    Host  $host;
+        proxy_read_timeout  900;
 
-        ssl on;
-        ssl_certificate /etc/domain.crt;
-        ssl_certificate_key /etc/domain.key;
-
-        proxy_set_header Host           $http_host;
-        proxy_set_header X-Real-IP      $remote_addr;
-        proxy_set_header Authorization  "";
-
-        client_max_body_size 0;
-
-        chunked_transfer_encoding on;
-        access_log   /var/log/nginx/domain.access.log  main;
-
-        location / {
-            proxy_pass          http://docker-registry:5000;
-            proxy_set_header    Host  $host;
-            proxy_read_timeout  900;
-
-            auth_basic            "Restricted";
-            auth_basic_user_file  .htpasswd;
-        }
+        auth_basic            "Restricted";
+        auth_basic_user_file  .htpasswd;
     }
 }
