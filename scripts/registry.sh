@@ -64,19 +64,19 @@ fi
 ### [update certs] ############################################################################################################
 cp /vagrant/domain.crt /usr/share/ca-certificates/
 echo "domain.crt" |  tee -a /etc/ca-certificates.conf
- update-ca-certificates
+update-ca-certificates
 
 ### [docker-registry] ##################################################################################################
 mkdir -p certs
- mkdir -p /certs
- cp /vagrant/domain.* /certs
+mkdir -p /certs
+cp /vagrant/domain.* /certs
 
- mkdir auth
- docker run --entrypoint htpasswd registry:2 -Bbn testuser testpassword > auth/htpasswd
+mkdir auth
+docker run --entrypoint htpasswd registry:2 -Bbn testuser testpassword > auth/htpasswd
 
- docker stop registry
- docker rm registry
- docker run -d --restart=always -p 5000:5000 --name registry \
+docker stop registry
+docker rm registry
+docker run -d --restart=always -p 5000:5000 --name registry \
   -v `pwd`/auth:/auth \
   -e "REGISTRY_AUTH=htpasswd" \
   -e "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" \
@@ -88,7 +88,7 @@ mkdir -p certs
   -e REGISTRY_HTTP_TLS_KEY=/certs/domain.key \
   registry:2
 
- docker ps -a
+docker ps -a
 
 # install shipyard
 curl -sSL https://shipyard-project.com/deploy | bash -s
@@ -100,8 +100,6 @@ if [ "$TEST_Y" != "" ]; then  # test
 	bash /vagrant/scripts/nginx/build.sh
 	#bash /vagrant/scripts/bind9/build.sh
 fi
-
-
 
 exit 0
 
